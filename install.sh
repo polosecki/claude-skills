@@ -40,13 +40,19 @@ if [ "$MODE" = "check" ]; then
 fi
 
 mkdir -p "$DEST"
+# Backups go OUTSIDE $DEST. Claude Code discovers a skill at <skills dir>/<name>/SKILL.md, so a
+# backup kept as a sibling — skills/foo.backup.20260804/SKILL.md — is itself a valid skill path and
+# registers as a second, stale copy of the skill it was meant to protect. Same directory, wrong
+# namespace. Keeping the safety net, moving it out of the search path.
+BACKUPS="${CLAUDE_SKILL_BACKUPS:-$(dirname "$DEST")/skill-backups}"
 for s in "${skills[@]}"; do
   target="$DEST/$s"
   # Back up anything already there that is not ours, so a local edit is never lost silently.
   if [ -e "$target" ] && [ ! -L "$target" ] && ! cmp -s "$SRC/$s/SKILL.md" "$target/SKILL.md" 2>/dev/null; then
-    backup="$target.backup.$(date +%Y%m%d%H%M%S)"
+    mkdir -p "$BACKUPS"
+    backup="$BACKUPS/$s.$(date +%Y%m%d%H%M%S)"
     mv "$target" "$backup"
-    echo "  existing $s differed — kept at $(basename "$backup")"
+    echo "  existing $s differed — kept at $backup"
   fi
   rm -rf "$target"
   if [ "$MODE" = "link" ]; then ln -sfn "$SRC/$s" "$target"; echo "  linked  $s"
