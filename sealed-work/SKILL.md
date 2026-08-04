@@ -34,7 +34,10 @@ Independence comes from four axes, and every role sits somewhere on them:
 **You are the COORDINATOR. You do not implement and you do not adjudicate.**
 
 ```
-task ──▶ IMPLEMENTER ──ledger + artifacts──▶ CLAIMS · INTENT · LIVENESS
+task ──▶ INTENT (a) SCOPE ──▶ human vetoes or waves through   ◀── before any compute
+             │                 three lines; no subagent
+             ▼
+         IMPLEMENTER ──ledger + artifacts──▶ CLAIMS · INTENT (b) · LIVENESS
                                                     │  (parallel; none sees the implementer's prose,
                                                     │   and none sees the others')
                                               conflict? ──▶ DECIDER
@@ -70,11 +73,38 @@ own commands. Verdicts `PASS` / `FAIL` / **`UNEVIDENCED`** — the last is a fai
 state what would falsify each row *before* looking.
 
 ### Intent auditor — *is this the thing that was asked, and only that?*
-Sees the task and the **diff**, not the rationale, because the rationale is what is being checked. Maps
-clauses to artifacts **in both directions**: every clause needs an artifact or an explicit NOT-DONE with a
-reason, **and every artifact needs an authorising clause** — anything unmapped is over-delivery by
-definition, invisible to a clause-only check. Flags silent reinterpretation: legitimate, but logged as a
-deviation, never absorbed.
+
+**Fires twice, on different inputs. The first firing is the one that saves anything.**
+
+**(a) Scope — BEFORE any compute, on the PLAN.** Not a subagent: three lines emitted in your own reply
+and audited by the human at a glance.
+
+```
+Doing:         <one sentence. If it needs two, it is too big — split it or cut it.>
+Authorised by: "<direct quote from the person who asked>"
+Cheaper:       <one sentence, or "none">
+```
+
+Anything you cannot attach a quote to is **cut** — not queued, not flagged. If `Cheaper` is non-empty,
+**stop and wait**; a cheap route you did not offer is a choice they never got to make. Trigger is
+mechanical, never discretionary: any action that fits a model, creates a file, or takes more than one step.
+
+*Why this must come first:* an audit of over-delivery that runs on the diff can only ever produce a
+retraction. The compute is spent, the files are written. Catching a 30-hour run afterwards saves nothing;
+catching it in the plan saves 30 hours. Scope inflation is only auditable while the plan is still a plan.
+
+*Why not a subagent:* it fires many times a day, and anything with a round-trip cost gets skipped under
+pressure. A check that gets skipped is not a check.
+
+**(b) Faithfulness — AFTER, on the DIFF.** Sees the task and the diff, not the rationale, because the
+rationale is what is being checked. Maps clauses to artifacts **in both directions**: every clause needs an
+artifact or an explicit NOT-DONE with a reason, **and every artifact needs an authorising clause** —
+anything unmapped is over-delivery by definition, invisible to a clause-only check. Flags silent
+reinterpretation: legitimate, but logged as a deviation, never absorbed.
+
+*The two firings differ in what they can prevent, which is why one cannot stand in for the other.* (a)
+prevents work that should not exist. (b) prevents work that exists but does not match what was asked.
+Unwanted-but-correct work passes (b) cleanly — there is nothing wrong with it except that nobody asked.
 
 *A number can be true and the wrong thing to have computed; a build can be faithful to the task and report
 false numbers. These are different audits.*
