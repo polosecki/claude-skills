@@ -8,6 +8,13 @@ Claude Code skills, versioned so they travel between machines instead of living 
 | `checked-work` | implementer / auditor / decider trio, so a result is verified rather than asserted |
 | `sealed-work` | the full eight-role structure — adds intent, liveness, provenance and adversary roles |
 
+Both open with the same **scope check**: three lines emitted before the first fit, the first file or
+the first multi-step plan — what you are doing, the direct quote authorising it, and the cheaper route
+if one exists. Anything with no quote behind it is cut. It is deliberately not a subagent, because it
+has to fire many times a day and anything with a round-trip cost gets skipped under time pressure.
+It catches what no downstream auditor can: work that is correct, correctly verified, and that nobody
+asked for.
+
 ## Install
 
 ```bash
@@ -24,9 +31,15 @@ cd ~/code/claude-skills && ./install.sh
 **Restart Claude Code afterwards.** The skill list is read at session start, so a skill installed
 mid-session will not appear.
 
-If a skill already installed differs from the copy here, the installer moves it aside to
-`<name>.backup.<timestamp>` rather than overwriting it, so a local edit is never lost silently.
-Override the destination with `CLAUDE_SKILLS_DIR` if you keep skills elsewhere.
+If a skill already installed differs from the copy here, the installer moves it aside rather than
+overwriting it, so a local edit is never lost silently. Backups go to
+`~/.claude/skill-backups/<name>.<timestamp>` — **outside** the skills directory, and that placement
+is load-bearing. A skill is discovered at `<skills dir>/<name>/SKILL.md`, so a backup kept as a
+sibling is itself a valid skill path and registers as a second, stale copy of the skill it was meant
+to protect.
+
+Two environment variables override the defaults: `CLAUDE_SKILLS_DIR` for where skills are installed,
+`CLAUDE_SKILL_BACKUPS` for where displaced copies are kept.
 
 ## Adding a skill
 
