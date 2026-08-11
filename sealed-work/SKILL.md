@@ -47,7 +47,10 @@ task ──▶ INTENT (a) SCOPE ──▶ human vetoes or waves through   ◀─
                                               ARCHIVIST (provenance, gates, seal)
                                                     │
                                      ADVERSARY — before any seal
-                                                    ▼
+                                                    │
+                                              DECIDER ◀── adversary findings are
+                                                    │      adjudicated, never passed
+                                                    ▼      straight through
                                               you ──▶ human
 ```
 
@@ -142,6 +145,24 @@ direction. Distinct from the auditors: they check *against* the task; this asks 
 framing, or the agreed story is right. Frame-level errors are usually the expensive ones and are on nobody's
 checklist by construction.
 
+**Three constraints, because this is the role most likely to be confidently wrong.** Its arguments are
+usually internally valid; when it fails, it fails at the premise, and everything downstream is rigorous
+enough to make a bad premise look verified.
+
+1. **It may only attack a claim it can quote, with a source** — a file and line, or the human's own words.
+   Never a paraphrase, and never a claim that appears only in an agent-written summary. If there is nothing
+   to quote, there is nothing to attack. *Highest-value of the three: the expensive failures come from an
+   adversary correctly demolishing a position nobody held.*
+2. **Every finding carries the scale that makes it one** — the noise it must exceed, the threshold it must
+   cross, or the decision it would change. A deviation in raw units invites alarm; the same deviation
+   against the spread it sits in answers the question.
+3. **Its findings go to the DECIDER before they reach the human.** Every other role's output is checked by
+   something. An unadjudicated adversary is the one path by which a wrong claim gets a hearing instead of a
+   re-derivation.
+
+**Do not drop the role to avoid this.** Its successes are ones no auditor can reach — an unfair comparison,
+a control nobody ran, a question not worth asking. The fix is adjudication, not omission.
+
 ### Decider — *given accounts that disagree, what does the evidence support?*
 Sees **both** accounts and the artifacts. Triage:
 
@@ -160,6 +181,14 @@ Bound by: **re-derive before ruling** · burden of proof sits with the universal
 evidence-based FAIL**, only decide what to do about it · **adjudicates whoever wrote the brief on equal
 terms** · every ruling recorded with what would reverse it · **first act on a bundled question is to split it
 by kind and escalate only the value residue.**
+
+**Adjudicating an adversary finding.** This is not two accounts disagreeing — it is one claim arriving
+unopposed, so the decider supplies the opposition. Before anything else, **verify the target exists**: find
+where the attacked claim is actually asserted, in a document or the human's own words. If it appears only in
+an agent-written summary or a brief, the finding attacks nothing and is returned, whatever its internal
+merit. Then apply the ordinary rules — re-derive the measurement, and check the finding states the scale
+that makes it a finding rather than a difference. A frame-level objection that survives all three is
+usually the most valuable thing the structure produces; one that fails the first is the most expensive.
 
 ---
 
@@ -244,8 +273,10 @@ and **block only that thread**, continuing with independent work.
 
 - **Shared framing is not solved, only mitigated.** Subagents inherit their parent's frame. The adversary
   helps; a genuinely outside party helps more; the human helps most.
-- **The auditor's brief is a single point of failure.** Whoever writes it controls what the auditor can see.
-  Give auditors the task as stated, never an interpretation of it.
+- **Any brief is a single point of failure.** Whoever writes it controls what the checker can see, so a
+  paraphrase in a brief becomes a premise the checker cannot question. Hand over the task as stated, never
+  an interpretation of it. This is the mechanism behind the adversary's quote-your-target constraint, and it
+  applies to every role that is handed something to check.
 - **Gates fix a class, not a category.** They reach errors with a detectable precondition. They cannot reach
   the error with no local signature — a component that was never live, a correct run of the wrong
   experiment. Nothing on disk distinguishes those.
