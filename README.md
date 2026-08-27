@@ -24,8 +24,8 @@ cd ~/code/claude-skills && ./install.sh
 
 | | |
 |---|---|
-| `./install.sh` | copy into `~/.claude/skills/` — re-run after a `git pull` |
-| `./install.sh --link` | symlink instead, so a `git pull` updates the installed skills in place |
+| `./install.sh` | symlink into `~/.claude/skills/`, so a `git pull` updates the installed skills in place |
+| `./install.sh --copy` | copy instead — a snapshot; re-run after a `git pull` |
 | `./install.sh --check` | report what is installed and whether it matches this repo; exits non-zero on drift |
 
 **Restart Claude Code afterwards.** The skill list is read at session start, so a skill installed

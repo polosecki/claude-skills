@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Install this repo's Claude Code skills into the personal skills directory.
 #
-#   ./install.sh          copy   (default; re-run after a git pull to pick up changes)
-#   ./install.sh --link   symlink (a git pull updates the skills in place)
+#   ./install.sh          symlink (default; a git pull updates the skills in place)
+#   ./install.sh --copy   copy    (a snapshot; re-run after a git pull to pick up changes)
 #   ./install.sh --check  report what is installed and whether it matches this repo
 #
 # Skills are discovered at ~/.claude/skills/<name>/SKILL.md. Restart Claude Code after
@@ -11,9 +11,10 @@ set -euo pipefail
 
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
-MODE="copy"
+MODE="link"
 case "${1:-}" in
   --link)  MODE="link" ;;
+  --copy)  MODE="copy" ;;
   --check) MODE="check" ;;
   --help|-h) sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
   "") ;;
