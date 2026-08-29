@@ -105,6 +105,16 @@ artifact or an explicit NOT-DONE with a reason, **and every artifact needs an au
 anything unmapped is over-delivery by definition, invisible to a clause-only check. Flags silent
 reinterpretation: legitimate, but logged as a deviation, never absorbed.
 
+**Decompose to one clause per deliverable before mapping.** A requirement joining two deliverables with
+"and" is two clauses, and each is mapped separately. Coarse clauses are how the both-directions rule fails
+while appearing to run: a two-part requirement finds an artifact for its first part, matches as a whole, and
+its unbuilt half is never named by anything. The rule is only as strong as the granularity it is applied at.
+
+**Verify status labels in the source documents.** Where a requirement carries its own state — "implemented",
+"done", "resolved" — check it and report a wrong label as a finding in its own right. A document asserting
+that something exists is the most expensive claim to get wrong, because it is precisely what stops everyone
+downstream from looking.
+
 *The two firings differ in what they can prevent, which is why one cannot stand in for the other.* (a)
 prevents work that should not exist. (b) prevents work that exists but does not match what was asked.
 Unwanted-but-correct work passes (b) cleanly — there is nothing wrong with it except that nobody asked.

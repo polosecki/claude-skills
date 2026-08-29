@@ -135,8 +135,24 @@ doesn't go in the report.
 > - **FAIL** — you re-derived it and it does not.
 > - **UNEVIDENCED** — the artifact does not support the claim. **This is a fail, not "probably fine".**
 >
-> Also check **over-delivery**: anything built that the task did not ask for. A clause-only check cannot see
-> this, because unrequested work maps to no clause.
+> Then check the mapping between what was asked and what exists, **in both directions**. Neither direction
+> finds the other's failures:
+>
+> - **Over-delivery** — anything built that the task did not ask for. Invisible to a clause-only check,
+>   because unrequested work maps to no clause.
+> - **Under-delivery** — anything the task asked for with no artifact behind it. Invisible to a
+>   ledger-only check, because a claim that was never made cannot fail an audit. **A missing thing produces
+>   no row.**
+>
+> **Split every requirement into one clause per deliverable before you map.** A sentence joining two
+> deliverables with "and" is two clauses. Map each separately. This is where under-delivery hides: a
+> two-part requirement matches an artifact for its first part and passes as a whole, and the unbuilt half
+> is never named by anything.
+>
+> **Where the source document carries its own status label** — "implemented", "done", "resolved" — verify
+> the label, and report a wrong one as a finding in its own right. A document asserting that something
+> exists is a claim like any other, and it is the most costly kind to get wrong: everyone downstream stops
+> looking.
 >
 > You will not be shown the implementer's report or reasoning. That is deliberate.
 
