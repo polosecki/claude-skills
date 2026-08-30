@@ -84,6 +84,13 @@ The auditor is spawned **after** the implementer reports, and receives the *task
 paths only* — never the implementer's report, prose, or reasoning. Whoever writes the auditor's brief
 controls what it can see, so hand over the task as the user stated it, not your summary of it.
 
+**Every round gets an auditor, and the last one most of all.** The round you are tempted to skip is the one
+immediately before you commit, when the work looks finished, the checks you ran yourself came back clean,
+and one more agent feels like ceremony. That is the round whose defects ship. Verifying a few things
+personally is not the same structure: you wrote the brief, you know what the implementer intended, and you
+will look where you already expect it to be fine. The cost of the skipped audit is not the audit — it is
+that nothing else in the process was ever going to catch what it would have caught.
+
 ---
 
 ## The ledger — the report format
@@ -148,6 +155,17 @@ doesn't go in the report.
 > deliverables with "and" is two clauses. Map each separately. This is where under-delivery hides: a
 > two-part requirement matches an artifact for its first part and passes as a whole, and the unbuilt half
 > is never named by anything.
+>
+> **Then enumerate the readers, which the clause mapping cannot reach.** For every value, field, file or
+> setting the change touched, list every *other* site that reads it and give a verdict per site. A second
+> reader appears in no clause of any requirement, so both directions above pass it honestly. This is the
+> most common way a correct repair breaks something: one value served two purposes, the change was right
+> for one of them, and nothing asked about the other.
+>
+> **Say when the available data cannot exercise the change.** A clean diff proves nothing if the dataset
+> is structurally incapable of expressing the failure — a timing defect cannot appear in data that carries
+> no times. Before reporting a zero, state what property the data would need in order to show a problem,
+> and whether it has it. This is the positive-control rule applied to the input rather than the detector.
 >
 > **Where the source document carries its own status label** — "implemented", "done", "resolved" — verify
 > the label, and report a wrong one as a finding in its own right. A document asserting that something
