@@ -133,8 +133,13 @@ to isolate mechanism A can end up measuring mechanism B. Perturbation is also th
 at zero" shows it *did not* matter; "forcing it to an arbitrary value changes nothing" shows it *could not
 have*.
 
-**Two levels, and the second is the one that gets missed:** (1) *can* the mechanism work; (2) **does the
-caller actually ask it to?** A gate testing only level 1 is blind to a correct component that nothing invokes.
+**Three levels, and each is missed more often than the one before:** (1) *can* the mechanism work;
+(2) **does the caller actually ask it to?** A gate testing only level 1 is blind to a correct component that
+nothing invokes; (3) **who else reads what this changed?** For every value, field or setting the change
+touched, enumerate the *other* sites that read it and give a verdict per site. A second reader appears in no
+clause of any requirement, so a scope audit passes it honestly. This is the common way a correct repair
+breaks something: one value served two purposes, the change was right for one, and nothing asked about the
+other.
 
 ### Archivist — *can someone else find, trust and reproduce this in a year?*
 Version tags; which results supersede which; artifacts where the ledger says they are; seals recording what
@@ -225,7 +230,10 @@ ledger; it is never the evidence.
 5. **Declared-inert requires a measured disable test.** A reason in a comment is not evidence.
 6. **Predict the blast radius before the change; confirm it after.** Name what must be *bitwise unchanged*.
    A fix whose scope was predicted then confirmed is far stronger than one merely observed not to break
-   anything.
+   anything. **The confirmation is only as strong as the data's ability to show a change** — state what
+   property the input would need in order to reveal a problem, and whether it has it. A timing defect
+   cannot appear in data carrying no times, so an unchanged artifact there is a correct and worthless
+   zero.
 7. **Pre-register as a commit that precedes the change commit.** Not a timestamp, not "it's in HEAD".
 8. **No self-adjudication.** A parent that can overrule its own auditor is not audited.
 9. **Stale documentation is an active hazard, not debt.** A comment asserting the opposite of the code will
